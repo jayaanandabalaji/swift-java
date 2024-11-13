@@ -160,5 +160,7 @@ public macro JavaStaticMethod() = #externalMacro(module: "JavaKitMacros", type: 
 ///   }
 /// }
 /// ```
-@attached(peer)
+///
+/// Todo check this, prefixed and suffixed not working
+@attached(peer,names: named(connect0NativeFunctionCall), named(connect0JVMInitNativeFunctionCall))
 public macro JavaImplementation(_ fullClassName: String) = #externalMacro(module: "JavaKitMacros", type: "JavaImplementationMacro")
