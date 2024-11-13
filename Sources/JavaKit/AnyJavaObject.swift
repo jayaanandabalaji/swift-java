@@ -63,6 +63,15 @@ extension JavaObject {
 }
 
 extension AnyJavaObject {
+public static func getJNIClass(in environment: JNIEnvironment) throws -> jclass {
+    try environment.translatingJNIExceptions {
+      environment.interface.FindClass(
+        environment,
+        fullJavaClassNameWithSlashes
+      )
+    }!
+  }
+
   /// Retrieve the underlying Java object.
   public var javaThis: jobject {
     javaHolder.object!
