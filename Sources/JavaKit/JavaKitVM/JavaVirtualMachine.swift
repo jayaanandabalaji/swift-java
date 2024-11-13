@@ -18,7 +18,7 @@ import FoundationEssentials
 import Foundation
 #endif
 
-public typealias JavaVMPointer = UnsafeMutablePointer<JavaVM?>
+typealias JavaVMPointer = UnsafeMutablePointer<JavaVM?>
 
 public final class JavaVirtualMachine: @unchecked Sendable {
   /// The JNI version that we depend on.
@@ -31,7 +31,7 @@ public final class JavaVirtualMachine: @unchecked Sendable {
   private let destroyOnDeinit: Bool
 
   /// Adopt an existing JVM pointer.
-  public init(adoptingJVM jvm: JavaVMPointer) {
+  private init(adoptingJVM jvm: JavaVMPointer) {
     self.jvm = jvm
     self.destroyOnDeinit = false
   }
@@ -120,7 +120,28 @@ extension JavaVirtualMachine {
   /// - Parameter
   ///   - asDaemon: Whether this thread should be treated as a daemon
   ///     thread in the Java Virtual Machine.
-  public func environment(asDaemon: Bool = false) throws -> JNIEnvironment {
+
+    public func attachCurrentThread(asDaemon:Bool=false){
+        do {
+            let jniEnv: JNIEnv? = try environment().pointee
+            var environment: UnsafeMutableRawPointer? = jniEnv.flatMap { env in
+                return UnsafeMutableRawPointer(OpaquePointer(env))
+            }
+
+            print("print attach current thread")
+            print("attaching current thread \(environment==nil)")
+            if asDaemon {
+             jvm.pointee!.pointee.AttachCurrentThreadAsDaemon(jvm, &environment, nil)
+            } else {
+                jvm.pointee!.pointee.AttachCurrentThread(jvm, &environment, nil)
+            }
+            print("attached current thread success")
+        }catch {
+            print("attach current thread error \(error)")
+        }
+    }
+
+    public func environment(asDaemon: Bool = false) throws -> JNIEnvironment {
     // Check whether this thread is already attached. If so, return the
     // corresponding environment.
     var environment: UnsafeMutableRawPointer? = nil
@@ -129,12 +150,15 @@ extension JavaVirtualMachine {
       &environment,
       JavaVirtualMachine.jniVersion
     )
+
+      print("returning environment without attaching current thread")
     if getEnvResult == JNI_OK, let environment {
       return environment.assumingMemoryBound(to: JNIEnv?.self)
     }
 
     // Attach the current thread to the JVM.
     let attachResult: jint
+      print("attaching swift current thread")
     if asDaemon {
       attachResult = jvm.pointee!.pointee.AttachCurrentThreadAsDaemon(jvm, &environment, nil)
     } else {
