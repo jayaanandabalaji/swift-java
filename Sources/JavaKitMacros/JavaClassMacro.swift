@@ -12,12 +12,23 @@
 //
 //===----------------------------------------------------------------------===//
 
+import Foundation
+import SwiftCompilerPlugin
+import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import Foundation // for e.g. replacingOccurrences
 
 package enum JavaClassMacro {}
+
+public struct myDiagnosticMessage: DiagnosticMessage{
+    public var message: String
+
+    public var diagnosticID: SwiftDiagnostics.MessageID
+
+    public var severity: SwiftDiagnostics.DiagnosticSeverity
+
+}
 
 extension JavaClassMacro: MemberMacro {
   package static func expansion(
