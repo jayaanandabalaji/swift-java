@@ -11,6 +11,7 @@ import class Foundation.ProcessInfo
 // Java is installed, e.g.,
 //   Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home.
 func findJavaHome() -> String {
+return ""
   if let home = ProcessInfo.processInfo.environment["JAVA_HOME"] {
     return home
   }
