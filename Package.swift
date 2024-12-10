@@ -6,29 +6,51 @@ import PackageDescription
 
 import class Foundation.FileManager
 import class Foundation.ProcessInfo
+import Foundation
 
 // Note: the JAVA_HOME environment variable must be set to point to where
 // Java is installed, e.g.,
 //   Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home.
+
 func findJavaHome() -> String {
-return "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
-  if let home = ProcessInfo.processInfo.environment["JAVA_HOME"] {
-    return home
-  }
-
-  // This is a workaround for envs (some IDEs) which have trouble with
-  // picking up env variables during the build process
-  let path = "\(FileManager.default.homeDirectoryForCurrentUser.path()).java_home"
-  if let home = try? String(contentsOfFile: path, encoding: .utf8) {
-    if let lastChar = home.last, lastChar.isNewline {
-      return String(home.dropLast())
-    }
-
-    return home
-  }
-
-  fatalError("Please set the JAVA_HOME environment variable to point to where Java is installed.")
+//    return ""
+//    return "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/"
+//    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+//    let environmentExecutablePath = ProcessInfo.processInfo.environment
+//    let resourcePath = Bundle.main.resourcePath
+//    return ""
+//    fatalError("this is error message balaji wanted to throw \(resourcePath)")
+//    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+//    return ProcessInfo.processInfo.environment["EXECUTABLE_PATH"]!+"/Contents/Resources/custom-jre"
+//    return ""/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/info.txt
+//    return URL(string: "custom-jre", relativeTo: Bundle.main.resourceURL)?.absoluteURL.absoluteString
+//    fatalError("Bundled JRE not found!")
 }
+
+
+
+//func findJavaHome() -> String {
+//return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+//    return "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/"
+//  if let home = ProcessInfo.processInfo.environment["JAVA_HOME"] {
+//    return home
+//  }
+//
+//  // This is a workaround for envs (some IDEs) which have trouble with
+//  // picking up env variables during the build process
+//  let path = "\(FileManager.default.homeDirectoryForCurrentUser.path()).java_home"
+//  if let home = try? String(contentsOfFile: path, encoding: .utf8) {
+//    if let lastChar = home.last, lastChar.isNewline {
+//      return String(home.dropLast())
+//    }
+//
+//    return home
+//  }
+//
+//  fatalError("Please set the JAVA_HOME environment variable to point to where Java is installed.")
+//}
+
 let javaHome = findJavaHome()
 
 let javaIncludePath = "\(javaHome)/include"

@@ -83,6 +83,9 @@ struct JavaCompilerBuildToolPlugin: BuildToolPlugin {
 // Java is installed, e.g.,
 //   Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home.
 func findJavaHome() -> String {
+    return ""
+    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+
   if let home = ProcessInfo.processInfo.environment["JAVA_HOME"] {
     return home
   }
