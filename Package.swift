@@ -11,12 +11,12 @@ import Foundation
 // Note: the JAVA_HOME environment variable must be set to point to where
 // Java is installed, e.g.,
 //   Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home.
-
+// return "/Users/jaya-21215/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home"
 func findJavaHome() -> String {
 //    return ""
 //    return "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/"
 //    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
-    return "/Users/jaya-tt0297/Desktop/writer_editor_multiplatform/kmp_multiplatform_proj_git/writer-mobile-kmp/custom-jre"
+    return "/Users/jaya-21215/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home"
 //    let environmentExecutablePath = ProcessInfo.processInfo.environment
 //    let resourcePath = Bundle.main.resourcePath
 //    return ""
